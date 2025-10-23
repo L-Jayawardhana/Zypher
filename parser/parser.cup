@@ -15,6 +15,12 @@ parser code {:
     public void report_error(String message, Object info) {
         System.err.println(message);
     }
+    
+    public void unrecovered_syntax_error(Symbol cur_token) {
+        System.err.println("Fatal syntax error at line " + cur_token.left + 
+                          ", column " + cur_token.right);
+        System.exit(1);
+    }
 :};
 
 /* Terminals (tokens) */
@@ -42,16 +48,19 @@ non terminal Object request_item;
 non terminal HeaderNode header_decl;
 non terminal AssertionNode assertion;
 
-/* Precedence (not critical for this grammar) */
+/* Precedence (not needed for this grammar) */
 
 /* Grammar Rules */
 start with program;
 
+/* Program: config? variables* tests+ */
 program ::= 
     config_opt:c variables:v tests:t
     {: 
         ProgramNode prog = new ProgramNode();
-        if (c != null) prog.setConfig(c);
+        if (c != null) {
+            prog.setConfig(c);
+        }
         for (Object var : v) {
             prog.addVariable((VariableNode) var);
         }
@@ -107,7 +116,7 @@ header_decl ::=
     :}
     ;
 
-/* Variables */
+/* Variables: let name = value; */
 variables ::=
     variables:list variable:v
     {:
@@ -132,7 +141,7 @@ value ::=
     | NUMBER:n      {: RESULT = n; :}
     ;
 
-/* Tests */
+/* Tests: test Name { ... } */
 tests ::=
     tests:list test_block:t
     {:
@@ -181,7 +190,7 @@ test_statement ::=
     | assertion:a       {: RESULT = a; :}
     ;
 
-/* Requests */
+/* HTTP Requests */
 request ::=
     GET STRING:path SEMICOLON
     {:
