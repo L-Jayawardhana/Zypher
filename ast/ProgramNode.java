@@ -1,3 +1,5 @@
+package ast;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -43,11 +45,6 @@ public class ProgramNode extends ASTNode {
     
     public void addTest(TestNode test) {
         this.tests.add(test);
-    }
-    
-    @Override
-    public void accept(ASTVisitor visitor) {
-        visitor.visit(this);
     }
     
     @Override

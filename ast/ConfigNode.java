@@ -1,3 +1,5 @@
+package ast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,11 +29,6 @@ public class ConfigNode extends ASTNode {
     
     public void addHeader(HeaderNode header) {
         this.defaultHeaders.add(header);
-    }
-    
-    @Override
-    public void accept(ASTVisitor visitor) {
-        visitor.visit(this);
     }
     
     @Override

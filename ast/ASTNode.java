@@ -1,3 +1,5 @@
+package ast;
+
 /**
  * Base class for all AST nodes
  */
@@ -19,11 +21,6 @@ public abstract class ASTNode {
     public void setLineNumber(int lineNumber) {
         this.lineNumber = lineNumber;
     }
-    
-    /**
-     * Accept method for visitor pattern (optional, for future use)
-     */
-    public abstract void accept(ASTVisitor visitor);
     
     @Override
     public abstract String toString();

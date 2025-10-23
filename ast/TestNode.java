@@ -1,3 +1,5 @@
+package ast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,11 +35,6 @@ public class TestNode extends ASTNode {
     
     public void addAssertion(AssertionNode assertion) {
         this.assertions.add(assertion);
-    }
-    
-    @Override
-    public void accept(ASTVisitor visitor) {
-        visitor.visit(this);
     }
     
     @Override

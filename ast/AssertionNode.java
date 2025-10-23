@@ -1,4 +1,4 @@
-
+package ast;
 
 /**
  * Represents an assertion statement
@@ -49,11 +49,6 @@ public class AssertionNode extends ASTNode {
     
     public int getExpectedStatusCode() {
         return Integer.parseInt(expectedValue);
-    }
-    
-    @Override
-    public void accept(ASTVisitor visitor) {
-        visitor.visit(this);
     }
     
     @Override

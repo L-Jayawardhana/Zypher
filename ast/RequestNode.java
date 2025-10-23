@@ -1,3 +1,5 @@
+package ast;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -47,11 +49,6 @@ public class RequestNode extends ASTNode {
     
     public boolean hasBody() {
         return body != null;
-    }
-    
-    @Override
-    public void accept(ASTVisitor visitor) {
-        visitor.visit(this);
     }
     
     @Override

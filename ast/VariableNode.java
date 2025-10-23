@@ -1,5 +1,7 @@
+package ast;
+
 /**
- * Represents a variable declaration: let name = value;
+ * Represents a variable declaration (let name = value;)
  */
 public class VariableNode extends ASTNode {
     private String name;
@@ -24,11 +26,6 @@ public class VariableNode extends ASTNode {
     
     public boolean isIntegerValue() {
         return value instanceof Integer;
-    }
-    
-    @Override
-    public void accept(ASTVisitor visitor) {
-        visitor.visit(this);
     }
     
     @Override

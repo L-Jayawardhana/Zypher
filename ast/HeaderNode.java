@@ -1,5 +1,7 @@
+package ast;
+
 /**
- * Represents a header declaration: header "Key" = "Value";
+ * Represents a header declaration
  */
 public class HeaderNode extends ASTNode {
     private String key;
@@ -16,11 +18,6 @@ public class HeaderNode extends ASTNode {
     
     public String getValue() {
         return value;
-    }
-    
-    @Override
-    public void accept(ASTVisitor visitor) {
-        visitor.visit(this);
     }
     
     @Override
