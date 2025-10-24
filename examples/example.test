@@ -27,7 +27,7 @@ test Login {
 test GetUserById {
   GET "/api/users/$userId";
   expect status = 200;
-  expect body contains "\"id\": 42";
+  expect body contains "\"id\":42";
   expect body contains "\"username\":";
 }
 
@@ -39,8 +39,8 @@ test UpdateUser {
   expect status = 200;
   expect header "X-App" = "TestLangDemo";
   expect header "Content-Type" contains "json";
-  expect body contains "\"updated\": true";
-  expect body contains "\"role\": \"ADMIN\"";
+  expect body contains "\"updated\":true";
+  expect body contains "\"role\":\"ADMIN\"";
 }
 
 // Test 4: Delete User
