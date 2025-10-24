@@ -2,14 +2,16 @@ package com.testlang.demo.model;
 
 public class User {
     private Integer id;
+    private String username;
     private String name;
     private String email;
     private String role;
     
     public User() {}
     
-    public User(Integer id, String name, String email, String role) {
+    public User(Integer id, String username, String name, String email, String role) {
         this.id = id;
+        this.username = username;
         this.name = name;
         this.email = email;
         this.role = role;
@@ -21,6 +23,14 @@ public class User {
     
     public void setId(Integer id) {
         this.id = id;
+    }
+    
+    public String getUsername() {
+        return username;
+    }
+    
+    public void setUsername(String username) {
+        this.username = username;
     }
     
     public String getName() {

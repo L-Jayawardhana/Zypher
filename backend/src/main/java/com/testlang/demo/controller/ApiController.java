@@ -22,7 +22,12 @@ public class ApiController {
      */
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
-        if ("admin".equals(request.getUsername()) && "1234".equals(request.getPassword())) {
+        // Accept multiple valid credentials
+        boolean validCredentials = 
+            ("admin".equals(request.getUsername()) && "1234".equals(request.getPassword())) ||
+            ("testuser".equals(request.getUsername()) && "test123".equals(request.getPassword()));
+        
+        if (validCredentials) {
             LoginResponse response = new LoginResponse();
             response.setToken("fake-jwt-token-12345");
             response.setUsername(request.getUsername());
@@ -75,6 +80,21 @@ public class ApiController {
         return ResponseEntity.ok()
             .header("Content-Type", "application/json")
             .header("X-App", "TestLangDemo")
+            .body(response);
+    }
+    
+    /**
+     * DELETE /api/users/{id}
+     * Test Case 4: Delete user
+     */
+    @DeleteMapping("/users/{id}")
+    public ResponseEntity<Map<String, Object>> deleteUser(@PathVariable Integer id) {
+        Map<String, Object> response = new HashMap<>();
+        response.put("deleted", true);
+        response.put("id", id);
+        
+        return ResponseEntity.ok()
+            .header("Content-Type", "application/json")
             .body(response);
     }
 }

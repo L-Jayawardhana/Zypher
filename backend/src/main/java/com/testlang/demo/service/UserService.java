@@ -12,8 +12,8 @@ public class UserService {
     
     public UserService() {
         // Initialize with sample data
-        users.put(42, new User(42, "Alice Johnson", "alice@example.com", "USER"));
-        users.put(100, new User(100, "Bob Smith", "bob@example.com", "ADMIN"));
+        users.put(42, new User(42, "alice", "Alice Johnson", "alice@example.com", "USER"));
+        users.put(100, new User(100, "bob", "Bob Smith", "bob@example.com", "ADMIN"));
     }
     
     public User getUserById(Integer id) {
