@@ -1,4 +1,11 @@
-# TestLang++ - Backend API Testing DSL
+
+<div align="center">
+  <h1 style="font-family: 'Fira Mono', 'Consolas', monospace; font-size: 2.5em; letter-spacing: 0.1em;">ZYPHER</h1>
+  <h3 style="font-family: 'Fira Mono', 'Consolas', monospace; font-size: 1.2em; color: #555;">A DSL for Effortless HTTP API Testing</h3>
+  <p><em>"Catch the wind of automation with <b>ZYPHER</b> — the breeze that powers your backend test suites."</em></p>
+</div>
+
+# TestLang++ (ZYPHER) - Backend API Testing DSL
 
 A Domain-Specific Language (DSL) for HTTP API testing that compiles `.test` files into executable JUnit 5 tests using Java's HttpClient.
 
