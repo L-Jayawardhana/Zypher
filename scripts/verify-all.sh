@@ -31,8 +31,8 @@ for i in "${!examples[@]}"; do
     example="${examples[$i]}"
     output="${outputs[$i]}"
     
-    echo "Testing: examples/$example"
-    if ./scripts/run-compiler.sh "examples/$example" "output/$output" > /dev/null 2>&1; then
+    echo "Testing: input/$example"
+    if ./scripts/run-compiler.sh "input/$example" "output/$output" > /dev/null 2>&1; then
         echo "  ✓ Compilation successful"
         
         # Check if output file exists and is not empty
