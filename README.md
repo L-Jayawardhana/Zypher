@@ -35,14 +35,14 @@ This generates the scanner and parser, then compiles all Java sources to `build/
 
 This compiles a `.test` file into Java JUnit test code.
 
-### 5. Start Backend API
+### 4. Start Backend API
 
 ```powershell
 .\scripts\start-backend.ps1
 ```
 The backend runs on `http://localhost:8080`.
 
-### 4. Run Tests
+### 5. Run Tests
 
 ```powershell
 .\scripts\run-tests.ps1
