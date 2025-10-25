@@ -8,7 +8,7 @@ echo "=== Compiling TestLang++ Compiler ==="
 # Paths
 LIB_DIR="lib"
 BUILD_DIR="build"
-JFLEX_JAR="$LIB_DIR/jflex-1.7.0.jar"
+JFLEX_JAR="$LIB_DIR/jflex-full-1.9.1.jar"
 CUP_JAR="$LIB_DIR/java-cup-11b.jar"
 CUP_RUNTIME="$LIB_DIR/java-cup-11b-runtime.jar"
 

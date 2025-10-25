@@ -24,6 +24,8 @@ if [ ! -f "$JUNIT_DIR/junit-platform-console-standalone-1.10.0.jar" ]; then
     echo "Downloading JUnit 5..."
     wget -O "$JUNIT_DIR/junit-platform-console-standalone-1.10.0.jar" \
         "https://repo1.maven.org/maven2/org/junit/platform/junit-platform-console-standalone/1.10.0/junit-platform-console-standalone-1.10.0.jar"
+else
+    echo "✓ JUnit already downloaded"
 fi
 
 JUNIT_JAR="$JUNIT_DIR/junit-platform-console-standalone-1.10.0.jar"

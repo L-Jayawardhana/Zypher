@@ -5,7 +5,7 @@ set -e
 
 if [ $# -lt 1 ]; then
     echo "Usage: $0 <input.test> [output.java]"
-    echo "Example: $0 examples/all-tests.test output/GeneratedTests.java"
+    echo "Example: $0 input/all-tests.test output/GeneratedTests.java"
     echo ""
     echo "Note: Per assignment spec, all tests should go in ONE .test file"
     echo "      and generate a SINGLE GeneratedTests.java file"

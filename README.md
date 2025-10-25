@@ -6,6 +6,20 @@ A Domain-Specific Language (DSL) for HTTP API testing that compiles `.test` file
 
 TestLang++ allows you to write declarative HTTP API tests that are compiled into Java JUnit 5 test classes. Tests are executed against a local Spring Boot backend.
 
+## 💻 System Requirements
+
+**Developed and tested on Arch Linux**
+
+- **Operating System**: Linux (Arch Linux recommended) or macOS
+  - All scripts are written in **Bash** and should work on most Unix-like systems
+  - macOS users should have no issues running the project
+  - Windows users may need WSL (Windows Subsystem for Linux) or Git Bash
+- **Java**: JDK 11 or higher
+- **Maven**: 3.6+ (for backend compilation)
+- **wget** or **curl**: For downloading dependencies
+
+> **Note**: This project was developed on Arch Linux. All build scripts (`.sh` files) are Bash scripts that work across Linux and macOS environments.
+
 ## 📁 Project Structure
 
 ```
@@ -14,7 +28,7 @@ TestLang++ allows you to write declarative HTTP API tests that are compiled into
 ├── backend/                # Spring Boot backend (test target)
 ├── codegen/                # Code generation (AST → JUnit)
 ├── compiler/               # Main compiler entry point
-├── examples/               # Sample .test files
+├── input/                  # Sample .test files
 ├── lib/                    # External dependencies (JFlex, CUP, JUnit)
 ├── output/                 # Generated Java test files
 ├── parser/                 # CUP parser specification
