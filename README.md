@@ -40,13 +40,13 @@ This compiles a `.test` file into Java JUnit test code.
 ```powershell
 .\scripts\start-backend.ps1
 ```
+The backend runs on `http://localhost:8080`.
 
 ### 4. Run Tests
 
 ```powershell
 .\scripts\run-tests.ps1
 ```
-The backend runs on `http://localhost:8080`.
 
 ## Available PowerShell Scripts
 
