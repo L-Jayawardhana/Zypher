@@ -1,4 +1,6 @@
-# TestLang++ for Windows (PowerShell)
+# ZYPHER
+
+## TestLang++ for Windows (PowerShell)
 
 This guide shows how to build and run TestLang++ on Windows using PowerShell.
 
@@ -33,27 +35,18 @@ This generates the scanner and parser, then compiles all Java sources to `build/
 
 This compiles a `.test` file into Java JUnit test code.
 
-### 4. Run Tests (Optional)
-
-```powershell
-.\scripts\run-tests.ps1
-```
-
-### 5. Start Backend API (Optional)
+### 5. Start Backend API
 
 ```powershell
 .\scripts\start-backend.ps1
 ```
 
-The backend runs on `http://localhost:8080`.
-
-### 6. Verify Everything
+### 4. Run Tests
 
 ```powershell
-.\scripts\verify-all.ps1
+.\scripts\run-tests.ps1
 ```
-
-This runs all steps: setup, compile, run compiler, and run tests.
+The backend runs on `http://localhost:8080`.
 
 ## Available PowerShell Scripts
 
@@ -64,7 +57,6 @@ This runs all steps: setup, compile, run compiler, and run tests.
 | `run-compiler.ps1` | Run the compiler on a `.test` file |
 | `run-tests.ps1` | Run JUnit tests |
 | `start-backend.ps1` | Start the Spring Boot backend API |
-| `verify-all.ps1` | Run all steps in sequence |
 
 ## Directory Structure
 
