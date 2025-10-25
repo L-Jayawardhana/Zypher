@@ -45,7 +45,7 @@ The backend runs on `http://localhost:8080`.
 ### 5. Run Tests
 
 ```powershell
-.\scripts\run-tests.ps1
+.\scripts\run-tests.ps1 "output/GeneratedTests.java"
 ```
 
 ## Available PowerShell Scripts
@@ -94,16 +94,6 @@ java -version
 ```
 
 If not installed, download from [adoptium.net](https://adoptium.net/).
-
-## For Linux/macOS Users
-
-Use the `.sh` scripts instead:
-
-```bash
-./scripts/setup-deps.sh
-./scripts/compile.sh
-./scripts/run-compiler.sh input/example.test output/GeneratedTests.java
-```
 
 ## Project Info
 
