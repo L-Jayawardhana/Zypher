@@ -27,6 +27,14 @@ mkdir -p "$(dirname "$OUTPUT_FILE")"
 BUILD_DIR="build"
 CUP_RUNTIME="lib/java-cup-11b-runtime.jar"
 
+# Classpath separator (':' on Unix, ';' on Windows)
+CPSEP=":"
+case "$(uname -s)" in
+    *MINGW*|*MSYS*|*CYGWIN*|*WindowsNT*)
+        CPSEP=";"
+        ;;
+esac
+
 if [ ! -d "$BUILD_DIR" ]; then
     echo "Build directory not found. Run ./scripts/compile.sh first"
     exit 1
@@ -37,7 +45,7 @@ echo "Input:  $INPUT_FILE"
 echo "Output: $OUTPUT_FILE"
 echo ""
 
-java -cp "$BUILD_DIR:$CUP_RUNTIME" compiler.TestLangCompiler "$INPUT_FILE" "$OUTPUT_FILE"
+java -cp "$BUILD_DIR${CPSEP}$CUP_RUNTIME" compiler.TestLangCompiler "$INPUT_FILE" "$OUTPUT_FILE"
 
 echo ""
 echo "✓ Generated: $OUTPUT_FILE"
