@@ -14,7 +14,7 @@ This guide shows how to build and run TestLang++ on Windows using PowerShell.
 ### 1. Download Dependencies
 
 ```powershell
-.\scripts\setup-deps.ps1
+./scripts/setup-deps.ps1
 ```
 
 This downloads JFlex, CUP, and JUnit into the `lib/` directory.
@@ -22,7 +22,7 @@ This downloads JFlex, CUP, and JUnit into the `lib/` directory.
 ### 2. Compile the TestLang++ Compiler
 
 ```powershell
-.\scripts\compile.ps1
+./scripts/compile.ps1
 ```
 
 This generates the scanner and parser, then compiles all Java sources to `build/`.
@@ -30,7 +30,7 @@ This generates the scanner and parser, then compiles all Java sources to `build/
 ### 3. Run the Compiler
 
 ```powershell
-.\scripts\run-compiler.ps1 "input\example.test" "output\GeneratedTests.java"
+./scripts/run-compiler.ps1 "input/example.test" "output/GeneratedTests.java"
 ```
 
 This compiles a `.test` file into Java JUnit test code.
@@ -38,14 +38,14 @@ This compiles a `.test` file into Java JUnit test code.
 ### 4. Start Backend API
 
 ```powershell
-.\scripts\start-backend.ps1
+./scripts/start-backend.ps1
 ```
 The backend runs on `http://localhost:8080`.
 
 ### 5. Run Tests
 
 ```powershell
-.\scripts\run-tests.ps1 "output/GeneratedTests.java"
+./scripts/run-tests.ps1 "output/GeneratedTests.java"
 ```
 
 ## Available PowerShell Scripts
@@ -92,9 +92,6 @@ Make sure Java is installed and in your PATH:
 ```powershell
 java -version
 ```
-
-If not installed, download from [adoptium.net](https://adoptium.net/).
-
 ## Project Info
 
 - **Language**: Java
