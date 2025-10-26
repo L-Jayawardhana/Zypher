@@ -46,8 +46,8 @@ parser code {:
 /* Terminals (tokens) */
 terminal CONFIG, BASE_URL, HEADER, LET, TEST;
 terminal GET, POST, PUT, DELETE;
-terminal EXPECT, STATUS, BODY, CONTAINS;
-terminal EQUALS, SEMICOLON, LBRACE, RBRACE;
+terminal EXPECT, STATUS, BODY, CONTAINS, IN;
+terminal EQUALS, SEMICOLON, LBRACE, RBRACE, DOTDOT;
 terminal String IDENTIFIER, STRING, MULTILINE_STRING;
 terminal Integer NUMBER;
 
@@ -281,6 +281,10 @@ assertion ::=
     EXPECT STATUS EQUALS NUMBER:code SEMICOLON
     {:
         RESULT = new AssertionNode(AssertionNode.AssertionType.STATUS, code);
+    :}
+    | EXPECT STATUS IN NUMBER:min DOTDOT NUMBER:max SEMICOLON
+    {:
+        RESULT = new AssertionNode(AssertionNode.AssertionType.STATUS_RANGE, min, max);
     :}
     | EXPECT STATUS EQUALS STRING:s SEMICOLON
     {:

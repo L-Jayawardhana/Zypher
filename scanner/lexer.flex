@@ -50,12 +50,14 @@ MultilineString = \"\"\"([^\"]|\"[^\"]|\"\"[^\"])*\"\"\"
     "status"        { return symbol(sym.STATUS); }
     "body"          { return symbol(sym.BODY); }
     "contains"      { return symbol(sym.CONTAINS); }
+    "in"            { return symbol(sym.IN); }
 
     /* Operators and Delimiters */
     "="             { return symbol(sym.EQUALS); }
     ";"             { return symbol(sym.SEMICOLON); }
     "{"             { return symbol(sym.LBRACE); }
     "}"             { return symbol(sym.RBRACE); }
+    ".."            { return symbol(sym.DOTDOT); }
 
     /* Literals */
     {InvalidIdentifier} {
