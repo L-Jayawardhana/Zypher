@@ -271,6 +271,7 @@ request_item ::=
     {: 
         System.err.println("Expected STRING after 'body =' at line " + nleft + ", column " + nright + ":");
         System.err.println("   -> Body must be a string, not a number");
+        System.err.println("   -> Example : { \"username\": \"$user\", \"password\": \"$password\" }");
         System.exit(1);
         RESULT = null;
     :}
