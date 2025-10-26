@@ -17,7 +17,7 @@ let adminRole = "ADMIN";
 test Login {
   POST "/api/login" {
     body = "{ \"username\": \"$user\", \"password\": \"$password\" }";
-  };
+  }
   expect status = 200;
   expect header "Content-Type" contains "json";
   expect body contains "\"token\":";
@@ -32,7 +32,7 @@ test LoginMultiline {
   "password": "$password"
 }
 """;
-  };
+  }
   expect status = 200;
   expect header "Content-Type" contains "json";
   expect body contains "\"token\":";
@@ -58,7 +58,7 @@ test GetUserByInvalidId {
 test UpdateUser {
   PUT "/api/users/$userId" {
     body = "{ \"role\": \"$adminRole\", \"email\": \"admin@example.com\" }";
-  };
+  }
   expect status = 200;
   expect header "X-App" = "TestLangDemo";
   expect header "Content-Type" contains "json";
@@ -75,7 +75,7 @@ test UpdateUserMultiline {
   "email": "admin@example.com"
 }
 """;
-  };
+  }
   expect status = 200;
   expect body contains "\"updated\":true";
   expect body contains "\"role\":\"ADMIN\"";
@@ -93,7 +93,7 @@ test LoginDifferentUser {
   POST "/api/login" {
     header "User-Agent" = "TestLangClient/1.0";
     body = "{ \"username\": \"testuser\", \"password\": \"test123\" }";
-  };
+  }
   expect status = 200;
   expect body contains "\"token\":";
 }
@@ -103,7 +103,7 @@ test LoginWithInvalidUserCredentials {
   POST "/api/login" {
     header "User-Agent" = "TestLangClient/1.0";
     body = "{ \"username\": \"testuser\", \"password\": \"test1234\" }";
-  };
+  }
   expect status = 200;
   expect body contains "\"token\":";
 }

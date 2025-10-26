@@ -87,7 +87,7 @@ test Login {
 Compile your `.test` file to Java:
 
 ```bash
-./scripts/run-compiler.sh examples/example.test output/GeneratedTests.java
+./scripts/run-compiler.sh input/example.test output/GeneratedTests.java
 ```
 
 ### 5. Run Backend
@@ -394,7 +394,23 @@ public class GeneratedTests {
 - ✅ Body content assertions
 - ✅ Compiles to executable JUnit 5 tests
 
-## 📚 Requirements
+## � Error Handling
+
+TestLang++ provides clear, helpful error messages for common mistakes:
+
+| Invalid Code | Why | Example Error Message |
+|--------------|-----|----------------------|
+| `let 2a = "x";` | Identifier cannot start with a digit | `Invalid identifier '2a' at line 1, column 5:`<br>`   -> Identifiers cannot start with a digit`<br>`   -> Valid examples: user1, userId, admin_role` |
+| `POST "/x" { body = 123; }` | Body must be a string | `Expected STRING after 'body =' at line N, column M:`<br>`   -> Body must be a string, not a number` |
+| `expect status = "200";` | Status must be an integer | `Expected NUMBER for status at line N, column M:`<br>`   -> Status must be a number, not a string`<br>`   -> Examples: 200, 201, 400` |
+| `GET "/x" expect status = 200;` | Missing semicolon after request | `Expected ';' after request at line N, column M:`<br>`   -> Expecting semicolon ';' after a request`<br>`   -> Example 1: GET "/api/users";`<br>`   -> Example 2: DELETE "/api/users/1";` |
+
+All error messages include:
+- **Line and column numbers** for precise error location
+- **Clear explanations** of what went wrong
+- **Helpful examples** showing correct syntax
+
+## �📚 Requirements
 
 - **Java**: 11 or higher (tested with Java 21)
 - **JFlex**: 1.9.1 (auto-downloaded)

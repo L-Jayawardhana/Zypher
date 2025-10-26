@@ -7,20 +7,40 @@ import java.util.*;
 /* Parser code */
 parser code {:
     public void syntax_error(Symbol cur_token) {
-        report_error("Syntax error at line " + cur_token.left + 
-                     ", column " + cur_token.right + 
-                     ", unexpected token: " + cur_token.value, null);
+        String errorMsg = "\n❌ Syntax Error at line " + cur_token.left + ", column " + cur_token.right;
+        
+        // Check what token was expected based on the current state
+        String tokenValue = cur_token.value != null ? cur_token.value.toString() : "unknown";
+        
+        // Check if this is likely a missing semicolon after a request
+        if (cur_token.sym == sym.EXPECT) {
+            errorMsg = "Expected ';' after request at line " + cur_token.left + ", column " + cur_token.right + ":";
+            errorMsg += "\n   -> Expecting semicolon ';' after a request";
+            errorMsg += "\n   -> Example 1: GET \"/api/users\";";
+            errorMsg += "\n   -> Example 2: DELETE \"/api/users/1\";";
+            report_error(errorMsg, null);
+            System.exit(1);
+        }
+        // Provide specific error messages based on the token type
+        else if (cur_token.sym == sym.NUMBER) {
+            // Check if this appears after 'let' keyword - likely an invalid identifier
+            errorMsg += "\n   -> Invalid identifier '" + tokenValue + "'";
+            errorMsg += "\n   -> Identifiers cannot start with a digit";
+            errorMsg += "\n   -> Valid examples: user1, userId, admin_role";
+        } else if (tokenValue.matches("^[0-9].*")) {
+            errorMsg += "\n   -> Invalid identifier '" + tokenValue + "'";
+            errorMsg += "\n   -> Identifiers must start with a letter or underscore";
+        } else {
+            errorMsg += "\n   -> Unexpected token: " + tokenValue;
+        }
+        
+        report_error(errorMsg, null);
     }
 
     public void report_error(String message, Object info) {
         System.err.println(message);
     }
     
-    public void unrecovered_syntax_error(Symbol cur_token) {
-        System.err.println("Fatal syntax error at line " + cur_token.left + 
-                          ", column " + cur_token.right);
-        System.exit(1);
-    }
 :};
 
 /* Terminals (tokens) */
@@ -200,7 +220,7 @@ request ::=
     {:
         RESULT = new RequestNode(RequestNode.HttpMethod.DELETE, path);
     :}
-    | POST STRING:path request_block_opt:items SEMICOLON
+    | POST STRING:path request_block_opt:items
     {:
         RequestNode req = new RequestNode(RequestNode.HttpMethod.POST, path);
         for (Object item : items) {
@@ -212,7 +232,7 @@ request ::=
         }
         RESULT = req;
     :}
-    | PUT STRING:path request_block_opt:items SEMICOLON
+    | PUT STRING:path request_block_opt:items
     {:
         RequestNode req = new RequestNode(RequestNode.HttpMethod.PUT, path);
         for (Object item : items) {
@@ -247,6 +267,13 @@ request_item ::=
     header_decl:h       {: RESULT = h; :}
     | BODY EQUALS STRING:s SEMICOLON    {: RESULT = s; :}
     | BODY EQUALS MULTILINE_STRING:s SEMICOLON    {: RESULT = s; :}
+    | BODY EQUALS NUMBER:n SEMICOLON    
+    {: 
+        System.err.println("Expected STRING after 'body =' at line " + nleft + ", column " + nright + ":");
+        System.err.println("   -> Body must be a string, not a number");
+        System.exit(1);
+        RESULT = null;
+    :}
     ;
 
 /* Assertions */
@@ -254,6 +281,14 @@ assertion ::=
     EXPECT STATUS EQUALS NUMBER:code SEMICOLON
     {:
         RESULT = new AssertionNode(AssertionNode.AssertionType.STATUS, code);
+    :}
+    | EXPECT STATUS EQUALS STRING:s SEMICOLON
+    {:
+        System.err.println("Expected NUMBER for status at line " + sleft + ", column " + sright + ":");
+        System.err.println("   -> Status must be a number, not a string");
+        System.err.println("   -> Examples: 200, 201, 400");
+        System.exit(1);
+        RESULT = null;
     :}
     | EXPECT HEADER STRING:key EQUALS STRING:val SEMICOLON
     {:
