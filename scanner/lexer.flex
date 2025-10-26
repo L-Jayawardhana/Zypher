@@ -30,6 +30,7 @@ Comment        = "//" [^\r\n]*
 Identifier     = [A-Za-z_][A-Za-z0-9_]*
 Number         = 0 | [1-9][0-9]*
 String         = \"([^\\\"]|\\.)*\"
+MultilineString = \"\"\"([^\"]|\"[^\"]|\"\"[^\"])*\"\"\"
 
 %%
 
@@ -58,6 +59,12 @@ String         = \"([^\\\"]|\\.)*\"
     /* Literals */
     {Identifier}    { return symbol(sym.IDENTIFIER, yytext()); }
     {Number}        { return symbol(sym.NUMBER, Integer.parseInt(yytext())); }
+    {MultilineString} {
+        // Remove triple quotes and preserve content
+        String str = yytext();
+        str = str.substring(3, str.length() - 3); // Remove """ at both ends
+        return symbol(sym.MULTILINE_STRING, str);
+    }
     {String}        { 
         // Remove quotes and handle escape sequences
         String str = yytext();

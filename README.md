@@ -160,6 +160,29 @@ PUT "/api/users/$id" {
 }
 ```
 
+**Multiline Body Support** (using triple quotes):
+```testlang
+POST "/api/login" {
+  body = """
+{
+  "username": "$user",
+  "password": "1234"
+}
+""";
+}
+
+PUT "/api/users/$id" {
+  body = """
+{
+  "role": "ADMIN",
+  "email": "admin@example.com"
+}
+""";
+}
+```
+
+> **Note**: You can now use triple-quoted strings (`"""..."""`) for multiline request bodies. This makes it easier to write complex JSON payloads with proper formatting and readability.
+
 ### Assertions
 
 ```testlang
@@ -177,6 +200,7 @@ expect body contains "\"token\":";
 
 ### Simple Login Test
 
+**Single-line body:**
 ```testlang
 config {
   base_url = "http://localhost:8080";
@@ -192,8 +216,30 @@ test Login {
 }
 ```
 
+**Multiline body:**
+```testlang
+config {
+  base_url = "http://localhost:8080";
+}
+
+test LoginMultiline {
+  POST "/api/login" {
+    header "Content-Type" = "application/json";
+    body = """
+{
+  "username": "admin",
+  "password": "1234"
+}
+""";
+  }
+  expect status = 200;
+  expect body contains "\"token\":";
+}
+```
+
 ### CRUD Operations
 
+**Single-line body:**
 ```testlang
 config {
   base_url = "http://localhost:8080";
@@ -210,10 +256,33 @@ test GetUser {
 
 test UpdateUser {
   PUT "/api/users/$userId" {
-    body = "{ \"role\": \"ADMIN\" }";
+    body = "{ \"role\": \"ADMIN\", \"email\": \"admin@example.com\" }";
   }
   expect status = 200;
   expect header "Content-Type" contains "json";
+  expect body contains "\"updated\": true";
+}
+```
+
+**Multiline body:**
+```testlang
+config {
+  base_url = "http://localhost:8080";
+  header "Content-Type" = "application/json";
+}
+
+let userId = 42;
+
+test UpdateUserMultiline {
+  PUT "/api/users/$userId" {
+    body = """
+{
+  "role": "ADMIN",
+  "email": "admin@example.com"
+}
+""";
+  }
+  expect status = 200;
   expect body contains "\"updated\": true";
 }
 ```
@@ -293,9 +362,9 @@ public class GeneratedTests {
   @Test
   void test_Login() throws Exception {
     HttpRequest req = HttpRequest.newBuilder(URI.create(BASE + "/api/login"))
-      .POST(HttpRequest.BodyPublishers.ofString(...))
+      .POST(HttpRequest.BodyPublishers.ofString("{\n  \"username\": \"admin\",\n  \"password\": \"1234\"\n}", StandardCharsets.UTF_8))
       .build();
-    HttpResponse<String> resp = client.send(req, ...);
+    HttpResponse<String> resp = client.send(req, HttpResponse.BodyHandlers.ofString());
     
     assertEquals(200, resp.statusCode());
     assertTrue(resp.body().contains("token"));
@@ -303,13 +372,27 @@ public class GeneratedTests {
 }
 ```
 
+> **Note**: When using multiline strings in `.test` files, the generated Java code preserves the formatting and line breaks in the request body.
+
 ## ⚠️ Limitations (By Design)
 
 - No JSON parsing/JSONPath
 - No loops, conditionals, or macros
 - No response capture/assignment
-- Single-line strings only (no multiline)
 - One file → one test class
+
+## ✨ Features
+
+- ✅ Single-line strings with escape sequences
+- ✅ **Multiline strings using triple quotes (`"""..."""`)**
+- ✅ Variable substitution in strings and paths
+- ✅ HTTP methods: GET, POST, PUT, DELETE
+- ✅ Custom headers per request
+- ✅ Request body support (single-line and multiline)
+- ✅ Status code assertions
+- ✅ Header assertions (exact match and contains)
+- ✅ Body content assertions
+- ✅ Compiles to executable JUnit 5 tests
 
 ## 📚 Requirements
 

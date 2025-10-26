@@ -1,10 +1,15 @@
 package codegen;
 
-import ast.*;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.List;
+
+import ast.AssertionNode;
+import ast.ConfigNode;
+import ast.HeaderNode;
+import ast.ProgramNode;
+import ast.RequestNode;
+import ast.TestNode;
 
 /**
  * Generates JUnit 5 test code from AST
@@ -14,6 +19,7 @@ public class CodeGenerator {
     private VariableSubstitutor substitutor;
     private PrintWriter writer;
     private int indentLevel = 0;
+    private String className = "GeneratedTests";
     
     public CodeGenerator(ProgramNode program) {
         this.program = program;
@@ -24,6 +30,18 @@ public class CodeGenerator {
      * Generate code and write to file
      */
     public void generate(String outputPath) throws IOException {
+        // Extract class name from output path
+        String fileName = outputPath;
+        if (fileName.contains("/") || fileName.contains("\\")) {
+            fileName = fileName.substring(Math.max(
+                fileName.lastIndexOf("/"), 
+                fileName.lastIndexOf("\\")
+            ) + 1);
+        }
+        if (fileName.endsWith(".java")) {
+            className = fileName.substring(0, fileName.length() - 5);
+        }
+        
         writer = new PrintWriter(new FileWriter(outputPath));
         
         try {
@@ -50,7 +68,7 @@ public class CodeGenerator {
     }
     
     private void generateClassHeader() {
-        println("public class GeneratedTests {");
+        println("public class " + className + " {");
         indentLevel++;
     }
     

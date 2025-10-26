@@ -28,7 +28,7 @@ terminal CONFIG, BASE_URL, HEADER, LET, TEST;
 terminal GET, POST, PUT, DELETE;
 terminal EXPECT, STATUS, BODY, CONTAINS;
 terminal EQUALS, SEMICOLON, LBRACE, RBRACE;
-terminal String IDENTIFIER, STRING;
+terminal String IDENTIFIER, STRING, MULTILINE_STRING;
 terminal Integer NUMBER;
 
 /* Non-terminals */
@@ -246,6 +246,7 @@ request_items ::=
 request_item ::=
     header_decl:h       {: RESULT = h; :}
     | BODY EQUALS STRING:s SEMICOLON    {: RESULT = s; :}
+    | BODY EQUALS MULTILINE_STRING:s SEMICOLON    {: RESULT = s; :}
     ;
 
 /* Assertions */

@@ -37,7 +37,7 @@ javac -d "$TEST_BUILD" -cp "$JUNIT_JAR" "$GENERATED_FILE"
 
 echo ""
 echo "=== Running JUnit Tests ==="
-java -jar "$JUNIT_JAR" --class-path "$TEST_BUILD" --scan-class-path
+java -jar "$JUNIT_JAR" --class-path "$TEST_BUILD" --scan-class-path | sed 's/\[OK\]/✓/g; s/\[X\]/✗/g'
 
 echo ""
 echo "✓ Tests completed!"

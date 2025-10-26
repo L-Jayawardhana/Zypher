@@ -1,13 +1,24 @@
 package com.testlang.demo.controller;
 
-import com.testlang.demo.model.*;
-import com.testlang.demo.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.testlang.demo.model.LoginRequest;
+import com.testlang.demo.model.LoginResponse;
+import com.testlang.demo.model.UpdateRequest;
+import com.testlang.demo.model.User;
+import com.testlang.demo.service.UserService;
 
 @RestController
 @RequestMapping("/api")
@@ -18,7 +29,6 @@ public class ApiController {
     
     /**
      * POST /api/login
-     * Test Case 1: Login with credentials
      */
     @PostMapping("/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request) {
@@ -40,7 +50,6 @@ public class ApiController {
     
     /**
      * GET /api/users/{id}
-     * Test Case 2: Get user by ID
      */
     @GetMapping("/users/{id}")
     public ResponseEntity<User> getUser(@PathVariable Integer id) {
@@ -55,7 +64,6 @@ public class ApiController {
     
     /**
      * PUT /api/users/{id}
-     * Test Case 3: Update user
      */
     @PutMapping("/users/{id}")
     public ResponseEntity<Map<String, Object>> updateUser(
@@ -85,7 +93,6 @@ public class ApiController {
     
     /**
      * DELETE /api/users/{id}
-     * Test Case 4: Delete user
      */
     @DeleteMapping("/users/{id}")
     public ResponseEntity<Map<String, Object>> deleteUser(@PathVariable Integer id) {

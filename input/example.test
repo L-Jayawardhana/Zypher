@@ -23,7 +23,22 @@ test Login {
   expect body contains "\"token\":";
 }
 
-// Test 2: Get User by ID
+// Test 2: Login with multiline body
+test LoginMultiline {
+  POST "/api/login" {
+    body = """
+{
+  "username": "$user",
+  "password": "$password"
+}
+""";
+  };
+  expect status = 200;
+  expect header "Content-Type" contains "json";
+  expect body contains "\"token\":";
+}
+
+// Test 3: Get User by ID
 test GetUserById {
   GET "/api/users/$userId";
   expect status = 200;
@@ -31,10 +46,18 @@ test GetUserById {
   expect body contains "\"username\":";
 }
 
-// Test 3: Update User Role
+// Test 4: Get User by Invalid ID
+test GetUserByInvalidId {
+  GET "/api/users/45";
+  expect status = 200;
+  expect body contains "\"id\":45";
+  expect body contains "\"username\":";
+}
+
+// Test 5: Update User Role
 test UpdateUser {
   PUT "/api/users/$userId" {
-    body = "{ \"role\": \"$adminRole\" }";
+    body = "{ \"role\": \"$adminRole\", \"email\": \"admin@example.com\" }";
   };
   expect status = 200;
   expect header "X-App" = "TestLangDemo";
@@ -43,18 +66,43 @@ test UpdateUser {
   expect body contains "\"role\":\"ADMIN\"";
 }
 
-// Test 4: Delete User
+// Test 6: Update user with multiline body
+test UpdateUserMultiline {
+  PUT "/api/users/$userId" {
+    body = """
+{
+  "role": "ADMIN",
+  "email": "admin@example.com"
+}
+""";
+  };
+  expect status = 200;
+  expect body contains "\"updated\":true";
+  expect body contains "\"role\":\"ADMIN\"";
+}
+
+// Test 7: Delete User
 test DeleteUser {
-  DELETE "/api/users/999";
+  DELETE "/api/users/42";
   expect status = 200;
   expect body contains "\"deleted\":";
 }
 
-// Test 5: Another Login Test
+// Test 8: Another Login Test
 test LoginDifferentUser {
   POST "/api/login" {
     header "User-Agent" = "TestLangClient/1.0";
     body = "{ \"username\": \"testuser\", \"password\": \"test123\" }";
+  };
+  expect status = 200;
+  expect body contains "\"token\":";
+}
+
+// Test 9: Another Invalid Login Test
+test LoginWithInvalidUserCredentials {
+  POST "/api/login" {
+    header "User-Agent" = "TestLangClient/1.0";
+    body = "{ \"username\": \"testuser\", \"password\": \"test1234\" }";
   };
   expect status = 200;
   expect body contains "\"token\":";
