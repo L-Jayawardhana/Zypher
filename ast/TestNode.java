@@ -8,6 +8,7 @@ import java.util.List;
  */
 public class TestNode extends ASTNode {
     private String name;
+    private String description;
     private List<RequestNode> requests;
     private List<AssertionNode> assertions;
     
@@ -19,6 +20,14 @@ public class TestNode extends ASTNode {
     
     public String getName() {
         return name;
+    }
+    
+    public String getDescription() {
+        return description;
+    }
+    
+    public void setDescription(String description) {
+        this.description = description;
     }
     
     public List<RequestNode> getRequests() {

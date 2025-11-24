@@ -125,6 +125,11 @@ public class CodeGenerator {
     }
     
     private void generateTestMethod(TestNode test) {
+        // Add description as a comment if present
+        if (test.getDescription() != null && !test.getDescription().trim().isEmpty()) {
+            println("// " + test.getDescription());
+        }
+        
         println("@Test");
         println("void test_" + test.getName() + "() throws Exception {");
         indentLevel++;
