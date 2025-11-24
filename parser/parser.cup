@@ -44,10 +44,10 @@ parser code {:
 :};
 
 /* Terminals (tokens) */
-terminal CONFIG, BASE_URL, HEADER, LET, TEST;
+terminal CONFIG, BASE_URL, HEADER, LET, TEST, DESCRIPTION;
 terminal GET, POST, PUT, DELETE;
 terminal EXPECT, STATUS, BODY, CONTAINS, IN;
-terminal EQUALS, SEMICOLON, LBRACE, RBRACE, DOTDOT;
+terminal EQUALS, SEMICOLON, LBRACE, RBRACE, DOTDOT, COLON;
 terminal String IDENTIFIER, STRING, MULTILINE_STRING;
 terminal Integer NUMBER;
 
@@ -185,6 +185,9 @@ test_block ::=
                 test.addRequest((RequestNode) stmt);
             } else if (stmt instanceof AssertionNode) {
                 test.addAssertion((AssertionNode) stmt);
+            } else if (stmt instanceof String) {
+                // This is a description
+                test.setDescription((String) stmt);
             }
         }
         RESULT = test;
@@ -206,7 +209,8 @@ test_statements ::=
     ;
 
 test_statement ::=
-    request:r           {: RESULT = r; :}
+    DESCRIPTION COLON STRING:desc  {: RESULT = desc; :}
+    | request:r           {: RESULT = r; :}
     | assertion:a       {: RESULT = a; :}
     ;
 

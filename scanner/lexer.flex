@@ -42,6 +42,7 @@ MultilineString = \"\"\"([^\"]|\"[^\"]|\"\"[^\"])*\"\"\"
     "header"        { return symbol(sym.HEADER); }
     "let"           { return symbol(sym.LET); }
     "test"          { return symbol(sym.TEST); }
+    "DESCRIPTION"   { return symbol(sym.DESCRIPTION); }
     "GET"           { return symbol(sym.GET); }
     "POST"          { return symbol(sym.POST); }
     "PUT"           { return symbol(sym.PUT); }
@@ -53,6 +54,7 @@ MultilineString = \"\"\"([^\"]|\"[^\"]|\"\"[^\"])*\"\"\"
     "in"            { return symbol(sym.IN); }
 
     /* Operators and Delimiters */
+    ":"             { return symbol(sym.COLON); }
     "="             { return symbol(sym.EQUALS); }
     ";"             { return symbol(sym.SEMICOLON); }
     "{"             { return symbol(sym.LBRACE); }
