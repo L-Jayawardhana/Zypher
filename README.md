@@ -90,7 +90,17 @@ Compile your `.test` file to Java:
 ./scripts/run-compiler.sh input/example.test output/GeneratedTests.java
 ```
 
-### 5. Run Backend
+### 5. Build Backend
+
+Build the Spring Boot backend with Maven:
+
+```bash
+cd backend
+mvn clean install
+cd ..
+```
+
+### 6. Run Backend
 
 Start the Spring Boot backend (in a separate terminal):
 
@@ -100,7 +110,7 @@ Start the Spring Boot backend (in a separate terminal):
 
 The server will start at `http://localhost:8080`
 
-### 6. Run Tests
+### 7. Run Tests
 
 Execute the generated JUnit tests:
 
@@ -137,6 +147,30 @@ Each test becomes a `@Test` method in JUnit:
 test TestName {
   // HTTP requests
   // Assertions
+}
+```
+
+**Test Descriptions (Optional):**
+
+You can add a description to any test case using the `DESCRIPTION` keyword. The description will appear as a comment above the generated `@Test` method:
+
+```testlang
+test GetUserById {
+  DESCRIPTION : "get user by id"
+  GET "/api/users/$userId";
+  expect status = 200;
+  expect body contains "\"id\":42";
+  expect body contains "\"username\":";
+}
+```
+
+This generates:
+
+```java
+// get user by id
+@Test
+void test_GetUserById() throws Exception {
+    // ... test code
 }
 ```
 
@@ -237,6 +271,7 @@ config {
 }
 
 test LoginMultiline {
+  DESCRIPTION : "get login details with multiple body string implementation"
   POST "/api/login" {
     header "Content-Type" = "application/json";
     body = """
@@ -263,12 +298,14 @@ config {
 let userId = 42;
 
 test GetUser {
+  DESCRIPTION : "get user by id"
   GET "/api/users/$userId";
   expect status = 200;
   expect body contains "\"id\": 42";
 }
 
 test GetUserWithRangeCheck {
+  DESCRIPTION : "Trying the get the range of status checking"
   GET "/api/users/$userId";
   expect status in 200..299;        // Accept any 2xx success status
   expect body contains "\"id\": 42";
@@ -414,6 +451,33 @@ public class GeneratedTests {
 - ✅ Compiles to executable JUnit 5 tests
 - ✅ Status code assertions (exact match and range)
 - ✅ **Range status checks (e.g., `expect status in 200..299`)**
+- ✅ **Test case descriptions (generates comments in output)**
+
+**Test Descriptions:**
+You can document your test cases with descriptions that appear as comments in the generated Java code:
+
+```testlang
+test GetUserById {
+  DESCRIPTION : "get user by id"
+  GET "/api/users/$userId";
+  expect status = 200;
+  expect body contains "\"id\":42";
+  expect body contains "\"username\":";
+}
+```
+
+Generates:
+
+```java
+// get user by id
+@Test
+void test_GetUserById() throws Exception {
+    // ... test code
+}
+```
+
+**Range Status Checks:**
+Accept any status code within a range (useful for 2xx, 4xx, 5xx):
 
 ```testlang
 test GetUserByIdRangeStatusCheck {
