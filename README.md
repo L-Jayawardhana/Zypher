@@ -530,13 +530,14 @@ Ensure Java 11+ is installed: `java -version`
 
 ```
 program       → config? variables* tests+
-config        → 'config' '{' config_items '}'
-config_items  → base_url | header_decl
+config         → 'config' '{' config_items '}'
+config_items   → base_url | header_decl
 variables     → 'let' IDENT '=' value ';'
 tests         → 'test' IDENT '{' statements+ '}'
 statements    → request | assertion
 request       → method path ['{' request_items '}'] ';'
 assertion     → 'expect' assertion_type ';'
+comments      → DESCRIPTION : "put your comment here" 
 ```
 
 ## 📄 License
