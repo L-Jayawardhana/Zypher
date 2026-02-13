@@ -118,6 +118,10 @@ Execute the generated JUnit tests:
 ./scripts/run-tests.sh output/GeneratedTests.java
 ```
 
+This is the possible outcome of running the generated tests:
+
+![Test Results](docs/images/test-results.png)
+
 ## 📝 Language Syntax
 
 ### Config Block (Optional)
